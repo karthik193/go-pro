@@ -26,6 +26,7 @@ export default function LoginPage(){
             getUserDetails().then(ud =>{
                 localStorage.setItem("id" , ud.id);
                 localStorage.setItem("mobileNo" , ud.mobileNo);
+                localStorage.setItem("Vno" , ud.Vno);
                 console.log(ud , "UD" )
             }); 
     

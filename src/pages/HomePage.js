@@ -41,7 +41,8 @@ export default function HomePage(){
                 ...request.declinedList,
                 localStorage.getItem("email")
             ], 
-            providerId : await getNewProvider(request.id).then(res=>res)
+            providerId : await getNewProvider(request.id).then(res=>res), 
+            
         }
 
         console.log(updatedData , "UPDATED DATA")
@@ -63,6 +64,7 @@ export default function HomePage(){
                 ...request, 
                 providerLoc : await getcurrentLoc().then(pos => pos),
                 providerMno : localStorage.getItem("mobileNo"),
+                providerVno: localStorage.getItem("Vno"),
                 status : 1, 
 
             };
