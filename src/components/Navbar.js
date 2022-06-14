@@ -1,6 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router";
 import React from "react";
+import '../style/common.css'
 
 export default function Navbar(){
 
@@ -18,9 +19,14 @@ export default function Navbar(){
     }
 
     return (
-        <div>
-            <button>Profile</button>
-            <button onClick={handleLogout}>Log Out</button>
+        <div align="right">
+                <div className="Navbar" 
+                    style={{
+                        width : "200px"
+                    }}>
+                <button className="btn btn-warning" onClick={handleLogout}>Log Out</button>
+            </div>
         </div>
+        
     )
 }

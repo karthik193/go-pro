@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import firebaseApp from '../firebase';
 import { getAuth , signInWithEmailAndPassword } from "firebase/auth";
 import { getUserDetails } from "../functions/database";
-
+import '../style/common.css';
 
 
 export default function LoginPage(){
@@ -11,7 +11,7 @@ export default function LoginPage(){
     const navigator = useNavigate();
     const auth = getAuth();
 
-    if(localStorage.getItem("admin") == "true"){
+    if(localStorage.getItem("email")){
         navigator("/");
     }
 
@@ -52,13 +52,20 @@ export default function LoginPage(){
         navigator('/signup')
     }
     return (
-        <div>
-            <form  onSubmit={handleSubmit}>
-                <input type="text" name="email"/>
-                <input type="password" name="password" />
-                <button type="submit" >Log in</button>
-            </form>
-            <button onClick={handleSignUp}>Sign Up</button>
+        <div className="mainContainer">
+            <div className="container LoginForm">
+                <h1>GO PRO</h1>
+                <form  onSubmit={handleSubmit} className="form-group">
+                    <input className ="form-control" type="text" name="email" placeholder="Enter Email"/>
+                    <input className ="form-control" type="password" name="password" placeholder="Enter Password"/>
+                    <button type="submit" className="btn btn-primary">Log in</button>
+                </form>
+                <button onClick={handleSignUp} className="btn">Sign Up</button>
+            </div>
+
+            <div>
+                <img src="/2.png"/>
+            </div>
         </div>
     );
 }

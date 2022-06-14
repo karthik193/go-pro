@@ -96,6 +96,7 @@ export default function HomePage(){
             })
         }else{
             await deleteDoc(doc(firestore , "requests" , request.id)).then(()=>{
+                handleFreeStatus(true);
                 setRequest(null);
             })
         }
@@ -111,9 +112,7 @@ export default function HomePage(){
         </div>
         {
             request ? 
-            <div>
-                <p>Request</p>
-
+            <div align="center">
                 {
                     request.status == 0 ?
                     <div>
@@ -124,40 +123,48 @@ export default function HomePage(){
                 }
                 
 
-                <div>
-                    <p>Id</p>
-                    <p>{request.userId}</p>
-                    
-                    <p>Location</p>
-                    <p><a href={"https://www.google.com/maps/search/" + request.userLoc} target="#">{request.userLoc} </a></p>
-
-                    <p>Charge Requested</p>
-                    <p>{request.chargeAmt}</p>
-
-                    <p>Amount to be Paid</p>
-                    <p>{request.amt}</p>
-
-                    <p>Contact</p>
-                    <p>{request.userMno}</p>
-                    
+                <div class="card assignCard" align="center">
+                    <h1>REQUEST</h1>
+                    <table className="detailsSection">
+                        <tr>
+                            <td><h4>Id</h4></td>
+                            <td>{request.userId}</td>
+                        </tr>
+                        <tr>
+                            <td><h4>Location</h4></td>
+                            <td><a href={"https://www.google.com/maps/search/" + request.userLoc} target="#">{request.userLoc} </a></td>
+                        </tr>
+                        <tr>
+                            <td><h4>Charge Requested</h4></td>
+                            <td>{request.chargeAmt}</td>
+                        </tr>
+                        <tr>
+                            <td><h4>Amount to be Paid</h4></td>
+                            <td>{request.amt}</td>
+                        </tr>
+                        <tr>
+                            <td><h4>Contact</h4></td>
+                            <td>{request.userMno}</td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div>
 
                 {(request.status === 1) ? 
-                    <button onClick={()=> updateStatus(2)}>start delivery</button>    
+                    <button className="btn btn-info" onClick={()=> updateStatus(2)}>start delivery</button>    
                 :null} 
 
                 {(request.status === 2) ? 
-                    <button onClick={()=> updateStatus(3)}>Reached User Location</button>    
+                    <button className="btn btn-primary" onClick={()=> updateStatus(3)}>Reached User Location</button>    
                 :null}    
 
                 {(request.status === 3) ? 
-                    <button onClick={()=> updateStatus(4)}>Delivery Done</button>    
+                    <button className="btn btn-success" onClick={()=> updateStatus(4)}>Delivery Done</button>    
                 :null}  
                 </div>
             </div>
-            : <p> no requests </p>
+            : <div align="center"> <h1>NO REQUESTS</h1></div>
         }
         </div>
         

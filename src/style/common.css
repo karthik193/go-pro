@@ -1,0 +1,58 @@
+.LoginForm{
+    width: 20em;
+    margin-top: 100px;
+}
+.LoginForm input{
+    margin-bottom: 2px;
+}
+.LoginForm button{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.mainContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.Navbar button{
+    align-content: right;
+    width: 100%;
+}
+
+table{
+    width: 100%;
+    text-align: left;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+table h4{
+    font-style:italic;
+}
+
+td{
+    padding:  1rem;
+    font-weight: bold;
+}
+
+tr:nth-child(even){
+    background-color: rgb(0 , 0 , 0 , 0.01);
+}
+tr:nth-child(odd){
+    background-color: rgb(0 , 0 , 0 , 0.1);
+}
+
+
+.card {
+    width: 500px;
+    height:  auto;
+    border-radius: 50px;
+    border: none ; 
+    background: white;
+    position: relative;
+    margin-top: 2rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+}

@@ -3,6 +3,8 @@ import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import { doc , setDoc , getFirestore, collection, addDoc, updateDoc} from "firebase/firestore";
 import uploadFile from "../functions/Files";
 import { useNavigate } from "react-router";
+import "../style/common.css" ; 
+
 export default function SignUpPage(){
 
     
@@ -11,6 +13,10 @@ export default function SignUpPage(){
     const [authDocs, setAuthDocs] = useState(false);
     const navigate  = useNavigate(); 
 
+    if(localStorage.getItem("email")){
+        navigator("/");
+    }
+    
     const verifyinputs = (inputs) =>{
         return null ;
     }
@@ -88,30 +94,35 @@ export default function SignUpPage(){
 
     return(
 
-        <div>
+        <div className="mainContainer" >
+            
             {
                 authDocs ?
-                    <div>
+                    <div className="container LoginForm">
 
-                        <form onSubmit={handleDocsSubmit}>
+                        <form onSubmit={handleDocsSubmit} className="form-group">
                             <p>Provide Supporting Documents</p> 
-                            <input name="license" type="file"/>
-                            <input name="aadhar" placeholder="Enter Aadhar Number"/>
-                            <input name="Vno" placeholder="Vechile Number"/>
-                            <button type="submit">Submit</button>
+                            <input className="form-control" name="license" type="file"/>
+                            <input className="form-control" name="aadhar" placeholder="Enter Aadhar Number"/>
+                            <input className="form-control" name="Vno" placeholder="Vechile Number"/>
+                            <button className="btn btn-primary" type="submit">Submit</button>
                         </form>
                         
                     </div>
                 :
-                <div>
-                    <form onSubmit={handleSubmit}>
-                        <input name="email" placeholder="email" />
-                        <input name="password" placeholder="password" type="password" />
-                        <input  name="mobileNo" placeholder="Mobile Number" />
-                        <button type="submit">Sign Up</button>
+                <div className="container LoginForm">
+                    <h1>GO PRO</h1>
+                    <form onSubmit={handleSubmit} className="form-group">
+                        <input className="form-control"  name="email" placeholder="email" />
+                        <input className="form-control"  name="password" placeholder="password" type="password" />
+                        <input className="form-control"  name="mobileNo" placeholder="Mobile Number" />
+                        <button className="btn btn-primary"  type="submit">Sign Up</button>
                     </form>
                 </div>
             }
+            <div>
+                <img src="/2.png" />
+            </div>
         </div>
         
         
