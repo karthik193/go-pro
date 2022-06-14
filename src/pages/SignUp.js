@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
-import { doc , setDoc , getFirestore, collection, addDoc} from "firebase/firestore";
+import { doc , setDoc , getFirestore, collection, addDoc, updateDoc} from "firebase/firestore";
+import uploadFile from "../functions/Files";
+import { useNavigate } from "react-router";
 export default function SignUpPage(){
 
     
     const auth = getAuth();
     const firestore = getFirestore() ; 
     const [authDocs, setAuthDocs] = useState(false);
+    const navigate  = useNavigate(); 
 
     const verifyinputs = (inputs) =>{
         return null ;
@@ -17,7 +20,7 @@ export default function SignUpPage(){
         // add new user
         createUserWithEmailAndPassword(auth , email , password).then((userCredential)=>{
             const user = userCredential.user ; 
-            console.log("<CREATED USER>", user); 
+            console.log("<CREATED USER>"); 
 
             const providerCollection = collection(firestore , "provider")
 
@@ -27,6 +30,10 @@ export default function SignUpPage(){
                 mobileNo : mobileNo, 
                 holdingAmt: 0, 
                 free: true,
+            }).then((doc)=>{
+                localStorage.setItem("email", email); 
+                localStorage.setItem("mobileNo" , mobileNo);
+                localStorage.setItem("id" , doc.id);
             });
             setAuthDocs(true);
         })
@@ -50,8 +57,33 @@ export default function SignUpPage(){
         addUsertoFirebase(email, password, mobileNo); 
     }
 
-    const handleDocsSubmit = (event) =>{
+    const handleDocsSubmit = async (event) =>{
+
+        event.preventDefault();
         // upload files to firebase
+        const AadharNo  = event.target.aadhar.value ; 
+        const Vno = event.target.Vno.value ; 
+        const ImageFile = event.target.license.files[0];
+
+
+        console.log("<ID>" , localStorage.getItem("id")); 
+        if(ImageFile && AadharNo !== "" && Vno !== "" ){
+            await uploadFile(ImageFile , localStorage.getItem("id"));
+            const providerId  = localStorage.getItem("id") ; 
+
+            updateDoc(doc(firestore , "provider" , providerId) , {
+                "Ano" : AadharNo, 
+                "Vno" : Vno
+            }).catch(err =>{
+                console.log(err);
+            })
+
+            navigate("/");
+        }
+        else{
+            alert("Provide All Necessary Inputs");
+        }
+
     }
 
     return(

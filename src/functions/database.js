@@ -20,7 +20,7 @@ const getNewProvider = async ()=>{
         freeProviders.push(doc.data().email);
     })
 
-    const getRandomPI  = Math.random() *  freeProviders.length() ; 
+    const getRandomPI  = parseInt(Math.random() *  freeProviders.length); 
 
     return freeProviders[getRandomPI]; 
 }

@@ -1,4 +1,5 @@
 import { getAuth } from "firebase/auth";
+import { update } from "firebase/database";
 import { collection,getDocs, getDoc, doc,getFirestore, query, setDoc, where, deleteDoc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
@@ -19,7 +20,6 @@ export default function HomePage(){
             const q  = query(requestsCollection , where("providerId" , "==" , providerId));
             const querySnapshot = await getDocs(q); 
             querySnapshot.forEach(doc =>{
-                console.log(doc.data(), "data");
                 setRequest({
                     id: doc.id,
                     ...doc.data()
@@ -35,14 +35,17 @@ export default function HomePage(){
     
     const addtoDeclineList = async ()=>{
 
-        await setDoc(doc(firestore , "requests" , request.id),{
-            ...request , 
+        const updatedData = { 
             "declinedList": [
                 ...request.declinedList,
                 localStorage.getItem("email")
             ], 
-            providerId : await getNewProvider(request.id),
-        });
+            providerId : await getNewProvider(request.id).then(res=>res)
+        }
+
+        console.log(updatedData , "UPDATED DATA")
+
+        await updateDoc(doc(firestore , "requests" , request.id), updatedData);
     }
 
     const handleFreeStatus = async (freeStatus)=>{
@@ -62,8 +65,6 @@ export default function HomePage(){
                 status : 1, 
 
             };
-
-            console.log(updatedRequest, "<UPDATED>")
 
             await setDoc(doc(firestore , "requests" , request.id), updatedRequest).then(()=>{
                 setRequest(updatedRequest);
