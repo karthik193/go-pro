@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "site": "go-pro",
-    "public": "public",
+    "site" : "go-pro",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",

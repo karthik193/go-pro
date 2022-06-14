@@ -21,8 +21,9 @@ export default function HomePage(){
             const querySnapshot = await getDocs(q); 
             querySnapshot.forEach(doc =>{
                 setRequest({
+                    ...doc.data(),
                     id: doc.id,
-                    ...doc.data()
+                    
                 }
                 );
             })
@@ -61,7 +62,7 @@ export default function HomePage(){
             const updatedRequest  = {
                 ...request, 
                 providerLoc : await getcurrentLoc().then(pos => pos),
-                providerMno : localStorage.getItem("mno"),
+                providerMno : localStorage.getItem("mobileNo"),
                 status : 1, 
 
             };
