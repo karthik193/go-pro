@@ -4,6 +4,7 @@ import { collection,getDocs, getDoc, doc,getFirestore, query, setDoc, where, del
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import getNewProvider, { getUserDetails } from "../functions/database";
+import OTPInput from "otp-input-react";
 import getcurrentLoc from "../functions/Location";
 
 export default function HomePage(){
@@ -11,6 +12,7 @@ export default function HomePage(){
     const [request , setRequest] = useState(null);
     const auth = getAuth(); 
     const firestore = getFirestore();
+    const [otp , setOTP] = useState('');
 
     useEffect(()=>{
         
@@ -84,7 +86,7 @@ export default function HomePage(){
     const updateStatus = async (newStatus)=>{
 
         
-        if(newStatus <= 3){
+        if(newStatus <= 4){
             const updatedRequest  = {
                 ...request, 
                 status : newStatus, 
@@ -101,6 +103,16 @@ export default function HomePage(){
             })
         }
         
+    }
+
+    const verifyOTP = ()=>{
+        if(request.otp === otp){
+            alert("OTP VERIFIED"); 
+            updateStatus(4);
+        }
+        else{
+            alert("INVALID OTP");
+        }
     }
 
     console.log(request , "request");
@@ -156,11 +168,18 @@ export default function HomePage(){
                 :null} 
 
                 {(request.status === 2) ? 
-                    <button className="btn btn-primary" onClick={()=> updateStatus(3)}>Reached User Location</button>    
-                :null}    
+                    <button className="btn btn-primary" onClick={()=> updateStatus(5)}>Reached User Location</button>    
+                :null} 
 
                 {(request.status === 3) ? 
-                    <button className="btn btn-success" onClick={()=> updateStatus(4)}>Delivery Done</button>    
+                    <div className="otpInput" align="center"> 
+                        <OTPInput value={otp} onChange={setOTP} autoFocus OTPLength={4} otpType="number" disabled={false}  />
+                        <button className="btn btn-default" onClick={verifyOTP}>Verify</button>
+                    </div>     
+                :null}   
+
+                {(request.status === 4) ? 
+                    <button className="btn btn-success" onClick={()=> updateStatus(5)}>Delivery Done</button>    
                 :null}  
                 </div>
             </div>
@@ -175,5 +194,5 @@ export default function HomePage(){
 // 0 - waiting 
 // 1 - accepted 
 // 2 - started
-// 3 - reached location
+// 3 - otp verified
 // 4 - delivered

@@ -64,3 +64,9 @@ tr:nth-child(odd){
     display: flex;
     flex-direction: column;
 }
+
+.otpInput{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
