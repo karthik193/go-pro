@@ -101,7 +101,8 @@ export default function SignUpPage(){
                     <div className="container LoginForm">
 
                         <form onSubmit={handleDocsSubmit} className="form-group">
-                            <p>Provide Supporting Documents</p> 
+                            <h5>Provide Supporting Documents</h5> 
+                            <p>License</p>
                             <input className="form-control" name="license" type="file"/>
                             <input className="form-control" name="aadhar" placeholder="Enter Aadhar Number"/>
                             <input className="form-control" name="Vno" placeholder="Vechile Number"/>
@@ -118,9 +119,12 @@ export default function SignUpPage(){
                         <input className="form-control"  name="mobileNo" placeholder="Mobile Number" />
                         <button className="btn btn-primary"  type="submit">Sign Up</button>
                     </form>
+                    <button className="btn" onClick={()=>{
+                        navigate("/login");
+                    }}>Already a member? Log in </button>
                 </div>
             }
-            <div>
+            <div className="container">
                 <img src="/2.png" />
             </div>
         </div>
