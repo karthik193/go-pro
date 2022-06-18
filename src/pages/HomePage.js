@@ -168,7 +168,7 @@ export default function HomePage(){
                 :null} 
 
                 {(request.status === 2) ? 
-                    <button className="btn btn-primary" onClick={()=> updateStatus(5)}>Reached User Location</button>    
+                    <button className="btn btn-primary" onClick={()=> updateStatus(3)}>Reached User Location</button>    
                 :null} 
 
                 {(request.status === 3) ? 
